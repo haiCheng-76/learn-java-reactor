@@ -1,5 +1,6 @@
 package website.longhc;
 
+import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -8,6 +9,7 @@ import java.util.List;
 /**
  * Hello world!
  */
+@Slf4j
 public class App {
     public static void main(String[] args) {
         Flux<String> just = Flux.just("1", "2", "3", "4");
@@ -28,14 +30,12 @@ public class App {
         });
 
         // // 第一次订阅
-        integerFlux.subscribe(item -> System.out.println("first "+ item),
-                err -> System.err.println(err.getMessage()),
-                () -> System.out.println("OK")
+        integerFlux.subscribe(item -> log.info("first {}", item),
+                err -> log.error("Reactive stream failed", err),
+                () -> log.info("Completed")
         );
 
-        System.out.println();
-
         // 第二次订阅
-//        integerFlux.subscribe(item -> System.out.println("second "+ item));
+//        integerFlux.subscribe(item -> log.info("second {}", item));
     }
 }
